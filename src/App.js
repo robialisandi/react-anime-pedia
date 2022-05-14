@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import AppLayout from './components/Layout';
+
+const HomePage = lazy(() => import('./pages/Home'));
+const DetailPage = lazy(() => import('./pages/Anime'));
 
 function App() {
+  const client = new ApolloClient({
+    uri: 'https://graphql.anilist.co/',
+    cache: new InMemoryCache(),
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <Suspense fallback={<div>Suspenseee</div>} maxDuration={5000}>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route exact path='/' element={<HomePage />} />
+              <Route path='/anime/:id' element={<DetailPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </ApolloProvider>
+    </BrowserRouter>
   );
 }
 
