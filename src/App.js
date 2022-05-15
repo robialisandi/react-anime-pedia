@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import AppLayout from './components/Layout';
 
@@ -13,18 +13,23 @@ function App() {
   });
 
   return (
-    <BrowserRouter>
-      <ApolloProvider client={client}>
-        <Suspense fallback={<div>Suspenseee</div>} maxDuration={5000}>
+    <ApolloProvider client={client}>
+      <BrowserRouter>
+        <Suspense fallback={null} maxDuration={5000}>
           <Routes>
             <Route element={<AppLayout />}>
-              <Route exact path='/' element={<HomePage />} />
-              <Route path='/anime/:id' element={<DetailPage />} />
+              <Route
+                exact
+                path="/"
+                element={<Navigate to="/animes" replace />}
+              />
+              <Route exact path="/animes" element={<HomePage />} />
+              <Route path="/anime/:id" element={<DetailPage />} />
             </Route>
           </Routes>
         </Suspense>
-      </ApolloProvider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ApolloProvider>
   );
 }
 

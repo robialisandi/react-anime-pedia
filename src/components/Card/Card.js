@@ -10,10 +10,17 @@ const Card = ({ data }) => {
     cursor: pointer;
     grid-template-rows: auto 45px;
     padding: 12px 12px 8px 12px;
+    text-decoration: none;
 
-    &:hover {
-      h3 {
-        color: #3db4f2;
+    &:hover,
+    &:focus {
+      border-radius: 5px;
+      box-shadow: 0 14px 30px rgba(90, 221, 101, 0.2),
+        0 4px 4px rgba(90, 221, 101, 0.05);
+
+      .img-cont {
+        transform: translateY(-1px);
+        box-shadow: none;
       }
     }
 
@@ -38,20 +45,20 @@ const Card = ({ data }) => {
     }
 
     h3 {
-      text-decoration: none;
       font-weight: 600;
       line-height: 20px;
       margin-top: 8px;
       overflow: hidden;
+      text-overflow: ellipsis;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       font-family: 'Overpass', sans-serif;
-      color: #6c7784;
+      color: #3e3e3e;
       font-size: 0.95rem;
       transition: 0.14s ease;
       text-align: left;
-      max-lines: 2;
+      height: 42px;
       transition: color 0.3s ease;
     }
 
@@ -66,11 +73,11 @@ const Card = ({ data }) => {
   `;
   return (
     <Link css={styles} to={`/anime/${data.id}`}>
-      <div className='img-cont'>
+      <div className="img-cont">
         <LazyLoadImage
           src={data.coverImage.large}
           alt={data.title.english ?? data.title.romaji}
-          effect='opacity'
+          effect="opacity"
         />
       </div>
       <h3>{data.title.english ?? data.title.romaji}</h3>

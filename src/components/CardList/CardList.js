@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery } from '@apollo/client';
-import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LOAD_ANIME } from '../../queries';
-import Card from '../Card';
 import { css } from '@emotion/react';
 import { v4 as uuid } from 'uuid';
+import LoadingIcon from '../LoadingIcon';
+import PropTypes from 'prop-types';
+import Card from '../Card';
 
-const CardList = () => {
+function CardList({ page }) {
   const navigate = useNavigate();
   const [queryData, setQueryData] = useState({});
 
@@ -25,10 +26,6 @@ const CardList = () => {
   `;
 
   const contStyles = css`
-    max-width: 1300px;
-    width: 85%;
-    margin: 0 auto 50px auto;
-
     .entry-list-title {
       margin-left: 10px;
       margin-bottom: 10px;
@@ -36,15 +33,6 @@ const CardList = () => {
       font-family: 'Overpass', sans-serif;
       font-size: 1.4rem;
       color: #808a93;
-    }
-
-    /* tablet */
-    @media (min-width: 640px) and (max-width: 800px) {
-      width: 90%;
-    }
-    /* mobile */
-    @media (max-width: 640px) {
-      width: 92%;
     }
   `;
 
@@ -114,13 +102,14 @@ const CardList = () => {
       });
     }
   };
+
   const { loading } = useQuery(LOAD_ANIME, {
     onError: handleErrors,
     onCompleted: data => {
-      console.log('setQueryData', data);
+      console.log('data <-', data);
       setQueryData(data);
     },
-    variables: { sort: 'TRENDING_DESC' },
+    variables: { sort: 'TRENDING_DESC', page: parseInt(page) },
   });
 
   const listCards = useMemo(() => {
@@ -140,12 +129,13 @@ const CardList = () => {
     let defaultLists = [];
 
     const cardData = [...queryData.Page.media];
-    const cardList = cardData.map(entry => <Card data={entry} key={uuid()} />);
-    defaultLists.push(cardList);
+    console.log('CARD_DATA', cardData);
+    const listCard = cardData.map(entry => <Card data={entry} key={uuid()} />);
+    defaultLists.push(listCard);
 
     defaultLists = (
       <div css={contStyles} key={uuid()}>
-        <h1 className='entry-list-title'>HAHAH</h1>
+        <h1 className="entry-list-title">HAHAH</h1>
         <div css={gridStyles}>{defaultLists.flat(1)}</div>
       </div>
     );
@@ -154,11 +144,18 @@ const CardList = () => {
   }, [queryData]);
 
   if (loading) {
-    console.log('loading');
-    return <div css={styles}>LOADING</div>;
+    return (
+      <div css={styles}>
+        <LoadingIcon />
+      </div>
+    );
   }
 
   return <div css={styles}>{listCards}</div>;
+}
+
+CardList.propTypes = {
+  page: PropTypes.string.isRequired,
 };
 
 export default CardList;
