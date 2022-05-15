@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
 import { css } from '@emotion/react';
 import { Outlet } from 'react-router-dom';
 
-const AppLayout = props => {
+const AppLayout = () => {
   const HEADER_STYLE = css`
     display: flex;
     justify-content: space-between;

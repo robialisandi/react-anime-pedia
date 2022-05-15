@@ -3,7 +3,7 @@ import { useEffect, useState, useLayoutEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { Pagination } from '@mui/material';
-import CardList from '../../components/CardList';
+import CardList from '../../components/CardList/';
 
 const queryString = require('query-string');
 

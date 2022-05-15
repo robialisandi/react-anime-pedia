@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { css } from '@emotion/react';
 
-const Card = ({ data }) => {
+function Card({ entry }) {
   const styles = css`
     border: none;
     display: grid;
@@ -72,17 +72,17 @@ const Card = ({ data }) => {
     }
   `;
   return (
-    <Link css={styles} to={`/anime/${data.id}`}>
+    <Link css={styles} to={`/anime/${entry.id}`}>
       <div className="img-cont">
         <LazyLoadImage
-          src={data.coverImage.large}
-          alt={data.title.english ?? data.title.romaji}
+          src={entry.coverImage.large}
+          alt={entry.title.english ?? entry.title.romaji}
           effect="opacity"
         />
       </div>
-      <h3>{data.title.english ?? data.title.romaji}</h3>
+      <h3>{entry.title.english ?? entry.title.romaji}</h3>
     </Link>
   );
-};
+}
 
 export default Card;
