@@ -111,81 +111,32 @@ function CardList({ page }) {
     variables: { sort: 'TRENDING_DESC', page: parseInt(page) },
   });
 
-  // const listCards = useMemo(() => {
-  //   console.log('MEMO');
-  //   if (!queryDataAnime.Page) {
-  //     return <div>Memuat</div>;
-  //   }
-
-  //   if (queryDataAnime.Page.media.length === 0) {
-  //     return (
-  //       <div css={emptyStyles}>
-  //         <h1>¯\_(ツ)_/¯</h1>
-  //         <h2>Data tidak ada</h2>
-  //       </div>
-  //     );
-  //   }
-
-  //   let defaultLists = [];
-
-  //   const cardData = [...queryDataAnime.Page.media];
-  //   const listCard = cardData.map(entry => <Card entry={entry} key={uuid()} />);
-  //   defaultLists.push(listCard);
-  //   console.log('defaultLists BEFORE', defaultLists);
-
-  //   defaultLists = (
-  //     <div css={contStyles} key={uuid()}>
-  //       <h1 className="entry-list-title">HAHAH {page}</h1>
-  //       <div css={gridStyles}>{defaultLists}</div>
-  //     </div>
-  //   );
-  //   console.log('defaultLists AFTER', defaultLists);
-
-  //   return <>{defaultLists}</>;
-  // }, [queryDataAnime]);
-
-  const listCards = useMemo(() => {
-    if (!queryDataAnime.Page) {
-      return <div>Memuat</div>;
-    }
+  let listCards = useMemo(() => {
+    console.log('MEMO');
+    if (!queryDataAnime.Page) return <div>Memuat</div>;
 
     if (queryDataAnime.Page.media.length === 0) {
       return (
         <div css={emptyStyles}>
           <h1>¯\_(ツ)_/¯</h1>
-          <h2>Ah! My best friend, the void</h2>
+          <h2>Data tidak ada</h2>
         </div>
       );
     }
 
-    const entryLists = [queryDataAnime.Page.media];
     let defaultLists = [];
 
-    // loop through all lists and append the to default and user
-    entryLists.forEach(entryList => {
-      let cardData = [...entryList];
+    const cardData = [...queryDataAnime.Page.media];
+    const listCard = cardData.map(entry => <Card entry={entry} key={uuid()} />);
 
-      // to counter a bug with the api
-      // both MEDIA_TITLE_ENGLISH and MEDIA_TITLE_ENGLISH_DESC
-      // return the same response
+    defaultLists.push(listCard);
 
-      const cardList = cardData.map(entry => (
-        <Card key={uuid()} entry={entry} />
-      ));
-
-      // check if list is default or not
-
-      defaultLists.push(cardList);
-    });
-
-    defaultLists = (
+    return (
       <div css={contStyles} key={uuid()}>
-        <div css={gridStyles}>{defaultLists.flat(1)}</div>
+        <h1 className="entry-list-title">HAHAH {page}</h1>
+        <div css={gridStyles}>{defaultLists}</div>
       </div>
     );
-
-    // have the defaults uptop and user lists down bottom
-    return <>{defaultLists}</>;
   }, [queryDataAnime]);
 
   if (loading) {
