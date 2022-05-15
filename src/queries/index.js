@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const LOAD_ANIME = gql`
-  query ($sort: [MediaSort], $page: Int!) {
-    Page(page: $page, perPage: 5) {
+  query ($sort: [MediaSort], $page: Int!, $perPage: Int!) {
+    Page(page: $page, perPage: $perPage) {
       pageInfo {
         total
         perPage

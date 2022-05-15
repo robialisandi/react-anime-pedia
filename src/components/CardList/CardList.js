@@ -134,7 +134,7 @@ function CardList({ page }) {
     return (
       <div css={contStyles} key={uuid()}>
         <h1 className="entry-list-title">HAHAH {page}</h1>
-        <div css={gridStyles}>{defaultLists}</div>
+        <div css={gridStyles}>{defaultLists.flat(1)}</div>
       </div>
     );
   }, [queryDataAnime]);
