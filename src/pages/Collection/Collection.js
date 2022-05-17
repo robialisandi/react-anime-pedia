@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Card from '../../components/Card';
+import CardVertical from '../../components/Card/CardVertical';
 
 const Collection = () => {
   const { id } = useParams();
@@ -17,7 +17,7 @@ const Collection = () => {
         <div css={gridStyles}>
           {collects.list.map(entry => {
             console.log('tes', entry);
-            return <Card entry={entry} key={entry.id} />;
+            return <CardVertical entry={entry} key={entry.id} />;
           })}
         </div>
       </div>

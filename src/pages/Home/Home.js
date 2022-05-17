@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/client';
 import { LOAD_ANIME } from '../../queries';
 
 import LoadingIcon from '../../components/LoadingIcon';
-import Card from '../../components/Card';
+import CardVertical from '../../components/Card/CardVertical';
 
 const queryString = require('query-string');
 
@@ -145,7 +145,7 @@ const Home = () => {
         ) : (
           <div css={gridStyles}>
             {data.Page.media.map(entry => (
-              <Card entry={entry} key={entry.id} />
+              <CardVertical entry={entry} key={entry.id} />
             ))}
           </div>
         )}

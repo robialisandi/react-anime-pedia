@@ -42,10 +42,17 @@ const collectionsSlice = createSlice({
         ),
       };
     },
+    deleteCollection: (state, action) => {
+      return {
+        ...state,
+        collects: state.collects.filter(coll => coll.id != action.payload),
+      };
+    },
   },
 });
 
-export const { addNewCollection, addToCollection } = collectionsSlice.actions;
+export const { addNewCollection, addToCollection, deleteCollection } =
+  collectionsSlice.actions;
 export const allListCollections = state => {
   const allList = [];
   state.collections.collects.map(coll =>

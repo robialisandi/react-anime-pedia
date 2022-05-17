@@ -6,86 +6,11 @@ import { LOAD_ANIME } from '../../queries';
 import { css } from '@emotion/react';
 import { v4 as uuid } from 'uuid';
 import LoadingIcon from '../LoadingIcon';
-import Card from '../Card';
+import CardVertical from '../Card/CardVertical';
 
 function CardList({ page }) {
   const navigate = useNavigate();
   const [queryDataAnime, setQueryDataAnime] = useState({});
-
-  const styles = css`
-    .content-loading-icon {
-      height: 50px;
-      margin-top: 90px;
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      justify-content: center;
-      fill: white;
-    }
-  `;
-
-  const contStyles = css`
-    .entry-list-title {
-      margin-left: 10px;
-      margin-bottom: 10px;
-      font-weight: 700;
-      font-family: 'Overpass', sans-serif;
-      font-size: 1.4rem;
-      color: #808a93;
-    }
-  `;
-
-  const gridStyles = css`
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 25px 20px;
-    justify-content: space-between;
-
-    /* tablet */
-    @media (min-width: 640px) and (max-width: 800px) {
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    }
-
-    /* mobile */
-    @media (max-width: 640px) {
-      gap: 15px 10px;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    }
-  `;
-
-  const emptyStyles = css`
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-    h1 {
-      font-size: 4rem;
-      font-family: 'Overpass', sans-serif;
-      font-weight: 400;
-      color: #739dc238;
-    }
-
-    h2 {
-      font-size: 0.9rem;
-      font-family: 'Overpass', sans-serif;
-      font-weight: 600;
-      color: #739dc26e;
-    }
-
-    /* mobile */
-    @media (max-width: 640px) {
-      h1 {
-        font-size: 3rem;
-      }
-
-      h2 {
-        font-size: 0.7rem;
-      }
-    }
-  `;
 
   const handleErrors = e => {
     console.log(e);
@@ -127,7 +52,9 @@ function CardList({ page }) {
     let defaultLists = [];
 
     const cardData = [...queryDataAnime.Page.media];
-    const listCard = cardData.map(entry => <Card entry={entry} key={uuid()} />);
+    const listCard = cardData.map(entry => (
+      <CardVertical entry={entry} key={uuid()} />
+    ));
 
     defaultLists.push(listCard);
 
@@ -149,5 +76,80 @@ function CardList({ page }) {
   console.log('defaultLists EXE', listCards);
   return <div css={styles}>{listCards}</div>;
 }
+
+const styles = css`
+  .content-loading-icon {
+    height: 50px;
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    fill: white;
+  }
+`;
+
+const contStyles = css`
+  .entry-list-title {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-family: 'Overpass', sans-serif;
+    font-size: 1.4rem;
+    color: #808a93;
+  }
+`;
+
+const gridStyles = css`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 25px 20px;
+  justify-content: space-between;
+
+  /* tablet */
+  @media (min-width: 640px) and (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  /* mobile */
+  @media (max-width: 640px) {
+    gap: 15px 10px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+`;
+
+const emptyStyles = css`
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h1 {
+    font-size: 4rem;
+    font-family: 'Overpass', sans-serif;
+    font-weight: 400;
+    color: #739dc238;
+  }
+
+  h2 {
+    font-size: 0.9rem;
+    font-family: 'Overpass', sans-serif;
+    font-weight: 600;
+    color: #739dc26e;
+  }
+
+  /* mobile */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 3rem;
+    }
+
+    h2 {
+      font-size: 0.7rem;
+    }
+  }
+`;
 
 export default CardList;

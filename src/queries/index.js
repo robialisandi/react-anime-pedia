@@ -38,6 +38,7 @@ export const GET_ANIME_BY_ID = gql`
       siteUrl
       coverImage {
         extraLarge
+        medium
         large
       }
       popularity
