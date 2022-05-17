@@ -66,10 +66,9 @@ const Home = () => {
     const url = queryString.parse(location.search);
 
     if (url.page && ![1].includes(url.page)) {
-      console.log('url', url, parseInt(url.page));
       setPage({ ...page, currentPage: parseInt(url.page) });
     }
-  }, [location.search, page]);
+  }, [location.search]);
 
   useEffect(() => {
     const url = queryString.parse(location.search);
