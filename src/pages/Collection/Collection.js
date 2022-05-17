@@ -9,14 +9,16 @@ const Collection = () => {
   const collects = useSelector(state =>
     state.collections.collects.find(coll => coll.id === id)
   );
+  console.log('collects', collects);
 
   return (
     <div css={container}>
       <div css={wrapperLoading}>
         <div css={gridStyles}>
-          {collects.list.map((entry, index) => (
-            <Card entry={entry} key={index} />
-          ))}
+          {collects.list.map(entry => {
+            console.log('tes', entry);
+            return <Card entry={entry} key={entry.id} />;
+          })}
         </div>
       </div>
     </div>

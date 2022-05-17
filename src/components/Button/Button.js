@@ -11,6 +11,7 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useSelector } from 'react-redux';
 import Dialog from '../Dialog';
+import { allListCollections } from '../../features/collections/collectionsSlice';
 
 const StyledMenu = styled(props => (
   <Menu
@@ -62,6 +63,8 @@ const CustomizedMenus = ({
   anime,
 }) => {
   const { collects } = useSelector(state => state.collections);
+  const allCollection = useSelector(allListCollections);
+  console.log('allListCollections', allCollection);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
@@ -97,19 +100,33 @@ const CustomizedMenus = ({
         open={open}
         onClose={handleClose}
       >
-        {collects.map(item => (
-          <MenuItem
-            key={item.id}
-            onClick={() => {
-              onHandleClick({ id: item.id, data: anime });
-              setAnchorEl(null);
-            }}
-            disableRipple
-          >
-            <CollectionsBookmarkIcon />
-            {item.title}
-          </MenuItem>
-        ))}
+        {collects.map((item, index) => {
+          const isDisabled = allCollection.some(el => {
+            return el.idAnime === anime.id && el.idCollection === item.id;
+          });
+
+          console.log(
+            `${index} ${item.title} ${item.id} =============== `,
+            isDisabled,
+            item.id,
+            anime.id,
+            anime?.title?.english
+          );
+          return (
+            <MenuItem
+              key={item.id}
+              onClick={() => {
+                onHandleClick({ id: item.id, data: anime });
+                setAnchorEl(null);
+              }}
+              disableRipple
+              disabled={isDisabled}
+            >
+              <CollectionsBookmarkIcon />
+              {item.title}
+            </MenuItem>
+          );
+        })}
         <Divider sx={{ my: 0.5 }} />
         <MenuItem
           onClick={() => {

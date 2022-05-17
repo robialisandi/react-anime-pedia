@@ -2,13 +2,16 @@
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ButtonCollection from '../../components/Button';
 import LoadingIcon from '../../components/LoadingIcon';
 import Alert from '../../components/Alert';
-import { addToCollection } from '../../features/collections/collectionsSlice';
+import {
+  addToCollection,
+  allListCollections,
+} from '../../features/collections/collectionsSlice';
 import { GET_ANIME_BY_ID } from '../../queries';
 
 const Anime = () => {
@@ -43,6 +46,13 @@ const Anime = () => {
     setSnackBar(true);
   });
 
+  const btnAdd = useMemo(() => {
+    console.log('dataaaa', data?.Media);
+    return (
+      <ButtonCollection anime={data?.Media} onHandleClick={handleCollections} />
+    );
+  }, [data?.Media]);
+
   if (loading)
     return (
       <div css={wrapperLoading}>
@@ -63,7 +73,7 @@ const Anime = () => {
             <SubTitle>
               Popular {anime?.popularity} | favourites {anime?.favourites}
             </SubTitle>
-            <ButtonCollection anime={anime} onHandleClick={handleCollections} />
+            {btnAdd}
           </Info>
         </Header>
         <BoxWrapper>

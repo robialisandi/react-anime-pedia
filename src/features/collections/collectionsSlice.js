@@ -14,7 +14,6 @@ const initialState = {
       list: [],
     },
   ],
-  fav: true,
 };
 
 const collectionsSlice = createSlice({
@@ -47,4 +46,13 @@ const collectionsSlice = createSlice({
 });
 
 export const { addNewCollection, addToCollection } = collectionsSlice.actions;
+export const allListCollections = state => {
+  const allList = [];
+  state.collections.collects.map(coll =>
+    coll.list.map(animeItem =>
+      allList.push({ idCollection: coll.id, idAnime: animeItem.id })
+    )
+  );
+  return allList;
+};
 export default collectionsSlice.reducer;
