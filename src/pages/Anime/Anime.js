@@ -2,16 +2,19 @@
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import ButtonCollection from '../../components/Button';
 import LoadingIcon from '../../components/LoadingIcon';
+import Alert from '../../components/Alert';
 import { addToCollection } from '../../features/collections/collectionsSlice';
 import { GET_ANIME_BY_ID } from '../../queries';
 
 const Anime = () => {
   const { id } = useParams();
   const [anime, setAnime] = useState({});
+  const [snackBar, setSnackBar] = useState(false);
   const { error, loading, data } = useQuery(GET_ANIME_BY_ID, {
     variables: { id: parseInt(id) },
   });
@@ -32,11 +35,13 @@ const Anime = () => {
     }
   `;
 
-  const handleCollections = anime => {
+  const handleCollections = useCallback(anime => {
+    setSnackBar(false);
     console.log('click');
     console.log('masuk data', anime);
     dispatch(addToCollection(anime));
-  };
+    setSnackBar(true);
+  });
 
   if (loading)
     return (
@@ -53,15 +58,13 @@ const Anime = () => {
       </Banner>
       <Wrapper>
         <Header>
-          <div>
-            <Title>{anime?.title?.romaji}</Title>
-            <button onClick={() => handleCollections({ id: '1', data: anime })}>
-              Add Collection
-            </button>
-          </div>
-          <SubTitle>
-            Popular {anime?.popularity} | favourites {anime?.favourites}
-          </SubTitle>
+          <Title>{anime?.title?.english || anime?.title?.romaji}</Title>
+          <Info>
+            <SubTitle>
+              Popular {anime?.popularity} | favourites {anime?.favourites}
+            </SubTitle>
+            <ButtonCollection anime={anime} onHandleClick={handleCollections} />
+          </Info>
         </Header>
         <BoxWrapper>
           <Description
@@ -71,6 +74,11 @@ const Anime = () => {
           ></Description>
         </BoxWrapper>
       </Wrapper>
+      <Alert
+        isOpen={snackBar}
+        message="Anime Added"
+        onHandleClose={() => setSnackBar(false)}
+      />
     </Container>
   );
 };
@@ -81,7 +89,6 @@ const Container = styled.div`
 `;
 
 const Banner = styled.div`
-  background-position: 50% 35%;
   background-repeat: no-repeat;
   background-size: cover;
   height: 400px;
@@ -110,12 +117,17 @@ const Title = styled.span`
   background: #ffffffab;
   font-weight: bold;
 `;
+const Info = styled.div`
+  display: flex;
+  align-items: center;
+`;
 const SubTitle = styled.span`
   z-index: 2;
   padding: 10px;
   background: #000000ab;
   color: #5add65;
   font-size: 12px;
+  margin-right: 20px;
 `;
 
 const Wrapper = styled.div`

@@ -21,6 +21,15 @@ const collectionsSlice = createSlice({
   name: 'collections',
   initialState,
   reducers: {
+    addNewCollection: (state, action) => {
+      return {
+        ...state,
+        collects: [
+          ...state.collects,
+          { id: uuid(), title: action.payload, list: [] },
+        ],
+      };
+    },
     addToCollection: (state, action) => {
       return {
         ...state,
@@ -34,12 +43,8 @@ const collectionsSlice = createSlice({
         ),
       };
     },
-    getCollection: (state, action) => {
-      return state.collects.filter(coll => coll.id === action.payload);
-    },
-    detailCollection: (state, action) => {},
   },
 });
 
-export const { addToCollection } = collectionsSlice.actions;
+export const { addNewCollection, addToCollection } = collectionsSlice.actions;
 export default collectionsSlice.reducer;
