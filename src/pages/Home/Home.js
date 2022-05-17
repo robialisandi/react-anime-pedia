@@ -62,17 +62,17 @@ const Home = () => {
     setDefaultPage(p);
   };
 
-  const updatePage = url => {
-    setPage({ ...page, currentPage: parseInt(url) });
-  };
+  // const updatePage = url => {
+  //   setPage({ ...page, currentPage: parseInt(url) });
+  // };
 
-  useEffect(() => {
-    const url = queryString.parse(location.search);
+  // useEffect(() => {
+  //   const url = queryString.parse(location.search);
 
-    if (url.page && ![1].includes(url.page)) {
-      updatePage(url.page);
-    }
-  }, [location.search]);
+  //   if (url.page && ![1].includes(url.page)) {
+  //     updatePage(url.page);
+  //   }
+  // }, [location.search]);
 
   useEffect(() => {
     const url = queryString.parse(location.search);
