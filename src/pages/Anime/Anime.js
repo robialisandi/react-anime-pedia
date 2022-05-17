@@ -13,6 +13,7 @@ import {
   allListCollections,
 } from '../../features/collections/collectionsSlice';
 import { GET_ANIME_BY_ID } from '../../queries';
+import { Box } from '@mui/material';
 
 const Anime = () => {
   const { id } = useParams();
@@ -69,6 +70,7 @@ const Anime = () => {
       <Wrapper>
         <Header>
           <Title>{anime?.title?.english || anime?.title?.romaji}</Title>
+          <Box sx={{ flexGrow: 1 }} />
           <Info>
             <SubTitle>
               Popular {anime?.popularity} | favourites {anime?.favourites}
@@ -117,8 +119,10 @@ const Shadow = styled.div`
 `;
 
 const Header = styled.div`
-  justify-content: space-between;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-beetwen;
+  align-items: center;
 `;
 
 const Title = styled.span`
@@ -126,10 +130,12 @@ const Title = styled.span`
   padding: 10px;
   background: #ffffffab;
   font-weight: bold;
+  margin: 13px 0;
 `;
 const Info = styled.div`
-  display: flex;
-  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 12px;
 `;
 const SubTitle = styled.span`
   z-index: 2;

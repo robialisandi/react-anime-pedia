@@ -49,13 +49,13 @@ const CardHorizontal = ({ data }) => {
           )}
         </Link>
       </div>
-      <div css={cardContainer}>
+      <Link to={linkTo} css={cardContainer}>
         <div css={infoContainer}>
           <Link to={linkTo} className="nameLink">
             {data.title}
           </Link>
         </div>
-      </div>
+      </Link>
       <Button
         size="small"
         color="error"
@@ -95,7 +95,6 @@ const card = css`
   background-color: white;
   transition: all 0.3s linear;
   box-shadow: 0 14px 30px rgba(black, 0.15), 0 4px 4px rgba(black, 0.05);
-  text-decoration: none;
 `;
 
 const imageContainer = css`
@@ -120,6 +119,7 @@ const cardContainer = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-decoration: none;
 
   @include breakpoint(md) {
     justify-content: space-between;
