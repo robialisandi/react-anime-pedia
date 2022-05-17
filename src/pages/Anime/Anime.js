@@ -2,16 +2,13 @@
 import { useQuery } from '@apollo/client';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ButtonCollection from '../../components/Button';
 import LoadingIcon from '../../components/LoadingIcon';
 import Alert from '../../components/Alert';
-import {
-  addToCollection,
-  allListCollections,
-} from '../../features/collections/collectionsSlice';
+import { addToCollection } from '../../features/collections/collectionsSlice';
 import { GET_ANIME_BY_ID } from '../../queries';
 import { Box } from '@mui/material';
 
@@ -39,20 +36,18 @@ const Anime = () => {
     }
   `;
 
-  const handleCollections = useCallback(anime => {
-    setSnackBar(false);
-    console.log('click');
-    console.log('masuk data', anime);
-    dispatch(addToCollection(anime));
-    setSnackBar(true);
-  });
-
   const btnAdd = useMemo(() => {
+    const handleCollections = anime => {
+      setSnackBar(false);
+      dispatch(addToCollection(anime));
+      setSnackBar(true);
+    };
+
     console.log('dataaaa', data?.Media);
     return (
       <ButtonCollection anime={data?.Media} onHandleClick={handleCollections} />
     );
-  }, [data?.Media]);
+  }, [data?.Media, dispatch]);
 
   if (loading)
     return (

@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState, useLayoutEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { usePagination } from '@mui/material';
@@ -62,14 +62,14 @@ const Home = () => {
     setDefaultPage(p);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const url = queryString.parse(location.search);
 
     if (url.page && ![1].includes(url.page)) {
       console.log('url', url, parseInt(url.page));
       setPage({ ...page, currentPage: parseInt(url.page) });
     }
-  }, []);
+  }, [location.search, page]);
 
   useEffect(() => {
     const url = queryString.parse(location.search);
@@ -85,7 +85,7 @@ const Home = () => {
         navigate(`${location.pathname}`);
       }
     }
-  }, [page.currentPage]);
+  }, [page.currentPage, location.search, location.pathname, navigate]);
 
   const { items } = usePagination({
     count: page.lastPage,
@@ -99,7 +99,7 @@ const Home = () => {
     if (url.page && ![1].includes(url.page)) {
       setDefaultPage(parseInt(url.page));
     }
-  }, []);
+  }, [location.search]);
 
   return (
     <div css={container}>

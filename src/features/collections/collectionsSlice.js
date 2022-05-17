@@ -45,7 +45,7 @@ const collectionsSlice = createSlice({
     deleteCollection: (state, action) => {
       return {
         ...state,
-        collects: state.collects.filter(coll => coll.id != action.payload),
+        collects: state.collects.filter(coll => coll.id !== action.payload),
       };
     },
   },

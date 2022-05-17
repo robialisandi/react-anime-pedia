@@ -1,6 +1,6 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import { Button, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function CustomizedSnackbars({
@@ -8,13 +8,6 @@ export default function CustomizedSnackbars({
   onHandleClose,
   message,
 }) {
-  // const handleClose = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
-  //   setOpen(false);
-  // };
-
   const action = (
     <Fragment>
       <IconButton

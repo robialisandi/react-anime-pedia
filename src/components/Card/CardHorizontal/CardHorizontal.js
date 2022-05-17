@@ -42,10 +42,10 @@ const CardHorizontal = ({ data }) => {
             <img
               css={image}
               src={data.list[length - 1].coverImage.medium}
-              alt="cover image"
+              alt={data.list[length - 1].title.english || 'Cover'}
             />
           ) : (
-            <img css={image} src={NoImage} alt="cover image" />
+            <img css={image} src={NoImage} alt="Cover not found" />
           )}
         </Link>
       </div>
