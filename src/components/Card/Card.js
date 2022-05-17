@@ -14,22 +14,20 @@ function Card({ entry }) {
 
     &:hover,
     &:focus {
-      border-radius: 5px;
-      box-shadow: 0 14px 30px rgba(90, 221, 101, 0.2),
-        0 4px 4px rgba(90, 221, 101, 0.05);
-
       .img-cont {
         transform: translateY(-1px);
-        box-shadow: none;
+        box-shadow: 0 14px 30px rgba(0, 5, 15, 0.15),
+          0 4px 4px rgba(0, 5, 15, 0.05);
+      }
+      h3 {
+        color: #48b151;
       }
     }
 
     .img-cont {
-      background-color: #5add65;
+      background-color: #adeeb2;
       border-radius: 4px;
       height: 100%;
-      box-shadow: 0 14px 30px rgba(0, 5, 15, 0.15),
-        0 4px 4px rgba(0, 5, 15, 0.05);
 
       span {
         overflow: hidden;
@@ -54,7 +52,7 @@ function Card({ entry }) {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       font-family: 'Overpass', sans-serif;
-      color: #3e3e3e;
+      color: #6c6c6c;
       font-size: 0.95rem;
       transition: 0.14s ease;
       text-align: left;

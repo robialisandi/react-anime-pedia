@@ -25,67 +25,6 @@ const Home = () => {
   const [defaultPage, setDefaultPage] = useState(1);
   const [page, setPage] = useState(infoPage);
 
-  const container = css`
-    min-height: 100vh;
-    margin-top: 37px;
-
-    .paging ul {
-      justify-content: center;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-
-      button {
-        cursor: pointer;
-        margin: 0 3px;
-      }
-    }
-  `;
-
-  const styles = css`
-    margin: 20px 0px;
-    .content-loading-icon {
-      height: 50px;
-      margin-top: 90px;
-      margin-left: auto;
-      margin-right: auto;
-      display: flex;
-      justify-content: center;
-      fill: white;
-    }
-  `;
-
-  const contStyles = css`
-    .entry-list-title {
-      margin-left: 10px;
-      margin-bottom: 10px;
-      font-weight: 700;
-      font-family: 'Overpass', sans-serif;
-      font-size: 1.4rem;
-      color: #808a93;
-    }
-  `;
-
-  const gridStyles = css`
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 25px 20px;
-    justify-content: space-between;
-
-    /* tablet */
-    @media (min-width: 640px) and (max-width: 800px) {
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    }
-
-    /* mobile */
-    @media (max-width: 640px) {
-      gap: 15px 10px;
-      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    }
-  `;
-
   const handleErrors = e => {
     console.log(e);
     if (e.graphQLErrors) {
@@ -152,8 +91,6 @@ const Home = () => {
     count: page.lastPage,
     page: defaultPage,
     onChange: onChangePage,
-    hideNextButton: true,
-    showLastButton: true,
   });
 
   useEffect(() => {
@@ -202,21 +139,68 @@ const Home = () => {
         </ul>
       </nav>
 
-      <div css={styles}>
+      <div css={wrapperLoading}>
         {loading ? (
           <LoadingIcon />
         ) : (
-          <div css={contStyles}>
-            <div css={gridStyles}>
-              {data.Page.media.map(entry => (
-                <Card entry={entry} key={entry.id} />
-              ))}
-            </div>
+          <div css={gridStyles}>
+            {data.Page.media.map(entry => (
+              <Card entry={entry} key={entry.id} />
+            ))}
           </div>
         )}
       </div>
     </div>
   );
 };
+
+const container = css`
+  min-height: 100vh;
+  margin-top: 37px;
+
+  .paging {
+    margin-bottom: 25px;
+  }
+
+  .paging ul {
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+
+    button {
+      cursor: pointer;
+      margin: 0 3px;
+    }
+  }
+`;
+
+const wrapperLoading = css`
+  .content-loading-icon {
+    height: 50px;
+    margin: 120px auto;
+    display: flex;
+  }
+`;
+
+const gridStyles = css`
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px 15px;
+  justify-content: space-between;
+
+  /* tablet */
+  @media (min-width: 640px) and (max-width: 800px) {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  /* mobile */
+  @media (max-width: 640px) {
+    gap: 15px 10px;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+`;
 
 export default Home;

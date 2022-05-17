@@ -5,6 +5,8 @@ import AppLayout from './components/Layout';
 
 const HomePage = lazy(() => import('./pages/Home'));
 const DetailPage = lazy(() => import('./pages/Anime'));
+const CollectionListPage = lazy(() => import('./pages/CollectionList'));
+const CollectionPage = lazy(() => import('./pages/Collection'));
 
 function App() {
   const client = new ApolloClient({
@@ -25,6 +27,8 @@ function App() {
               />
               <Route exact path="/animes" element={<HomePage />} />
               <Route path="/anime/:id" element={<DetailPage />} />
+              <Route path="/collections" element={<CollectionListPage />} />
+              <Route path="/collection/:id" element={<CollectionPage />} />
             </Route>
           </Routes>
         </Suspense>
